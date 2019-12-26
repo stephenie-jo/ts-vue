@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    redirect: {name: 'home'},
   },
   {
     path: '/about',
@@ -28,7 +26,24 @@ const routes = [
         name: 'home',
         meta: {title: '首页'},
         component: () => import('../views/home/home.vue')
-      }
+      },
+      {
+        path: 'chat',
+        name: 'chat',
+        meta: {title: '消息'},
+        component: () => import('../views/chat/index.vue')
+      },
+      {
+        path: 'shopping-cart',
+        name: 'shopping-cart',
+        component: () => import('../views/shoppingCart/index.vue')
+      },
+      {
+        path: 'user-center',
+        name: 'user-center',
+        meta: {title: '个人中心'},
+        component: () => import('../views/userCenter/index.vue')
+      },
     ]
   }
 ]

@@ -4,7 +4,7 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
-    host: 'loc.iris.com',
+    host: 'localhost',
     port: 3030,
     open: true, 
     proxy: {
@@ -17,6 +17,9 @@ module.exports = {
         }
       }
     }
+  },
+  chainWebpack: (config) => {
+    config.resolve.symlinks(true) // 修复热更新失效
   },
   css: {
     extract: false,
