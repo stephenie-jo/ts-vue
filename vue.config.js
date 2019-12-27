@@ -4,8 +4,8 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
-    host: 'localhost',
-    port: 3030,
+    host: '192.168.0.103',
+    port: 8080,
     open: true, 
     proxy: {
       '/cxb': {

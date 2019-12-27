@@ -8,6 +8,7 @@ import {
   SwipeItem,
   Tabbar, 
   Search,
+  Lazyload,
   TabbarItem,
   PullRefresh
 } from 'vant'
@@ -18,6 +19,7 @@ Vue.use(Icon)
 Vue.use(Tabbar)
 Vue.use(Search)
 Vue.use(Swipe)
+Vue.use(Lazyload)
 Vue.use(SwipeItem)
 Vue.use(TabbarItem)
 Vue.use(PullRefresh)
