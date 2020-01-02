@@ -19,7 +19,12 @@ import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
 export default class Common extends Vue{
   // data
   active: number = 0
-  btns: object[] = [{label: '音乐馆'}]
+  btns: object[] = [
+    {label: '音乐馆'},
+    {label: '音乐馆'},
+    {label: '音乐馆'},
+    {label: '我的'},
+  ]
 
   created() {
     console.log(this.btns)
@@ -38,7 +43,7 @@ export default class Common extends Vue{
         break
       case 3: 
         this.$router.push({
-          name: 'user-center'
+          name: 'mine'
         })
         break
     }
@@ -55,6 +60,7 @@ export default class Common extends Vue{
   }
   .tabber {
     height: 100px;
+    text-align: center;
   }
 }
 </style>

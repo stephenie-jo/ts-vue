@@ -1,6 +1,6 @@
 <template>
   <div>
-    userCenter
+    mine
   </div>
 </template>
 

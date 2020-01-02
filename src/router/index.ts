@@ -31,10 +31,10 @@ const routes = [
         component: () => import('../views/shoppingCart/index.vue')
       },
       {
-        path: 'user-center',
-        name: 'user-center',
+        path: 'mine',
+        name: 'mine',
         meta: {title: '个人中心'},
-        component: () => import('../views/userCenter/index.vue')
+        component: () => import('../views/mine/index.vue')
       },
     ]
   }

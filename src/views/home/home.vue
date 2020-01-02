@@ -27,80 +27,13 @@
         <div class="item" style="float: right"></div>
       </div>
 
-      <div class="mod">
-        <div class="mui_tit">
-          <div class="mui_tit__text">官方歌单</div>
-          <span class="more">更多<van-icon name="arrow" /></span>
-        </div>
+      <Mod />
+      <Mod />
 
-        <div class="mui_scroll">
-          <div class="mui_scroll__bd">
-            <div class="mui_list">
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Mod1 />
 
-      <div class="mod">
-        <div class="mui_tit">
-          <div class="mui_tit__text">达人歌单</div>
-          <span class="more">更多<van-icon name="arrow" /></span>
-        </div>
+      <div>
 
-        <div class="mui_scroll">
-          <div class="mui_scroll__bd">
-            <div class="mui_list">
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-              <div class="mui_list_item">
-                <div class="mui_list__box">
-                  <div class="mui_list__media"></div>
-                  <div class="mui_list__bd">欧美| 流行节奏控</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       
 
@@ -110,7 +43,14 @@
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
-@Component
+import Mod from '@/compoents/mod/index.vue'
+import Mod1 from '@/compoents/mod1/index.vue'
+@Component({
+  components: {
+    Mod,
+    Mod1
+  }
+})
 export default class Home extends Vue{
   // data
   searchValue: any = ''
@@ -146,6 +86,7 @@ export default class Home extends Vue{
   padding-top: 20px;
   .header {
     line-height: 80px;
+    text-align: center;
     .search {
       height: 80px;
       color: #9b9b9b;
@@ -190,68 +131,6 @@ export default class Home extends Vue{
       border-radius: 20px;
       background: red;
     }
-  }
-  .mod {
-    .mui_tit {
-      padding: 0 40px;
-      position: relative;
-      .mui_tit__text {
-        font-size: 40px;
-        font-weight: 500;
-      }
-      .more {
-        color: rgba(26,26,26,.5);
-        position: absolute;
-        top: 10px;
-        right: 40px;
-        // transform: translateX(-50%);
-        .van-icon {
-          top: 5px;
-        }
-      }
-    }
-    .mui_scroll {
-      overflow: hidden;
-      .mui_scroll__bd {
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 14px 0;
-        margin-bottom: -14px;
-        .mui_list {
-          margin: 0 40px;
-          white-space: nowrap;
-          .mui_list_item {
-            display: inline-block;
-            &:last-child {
-              margin-right: 40px;
-            }
-            .mui_list__box {
-              margin: 0 10px;
-              .mui_list__media {
-                width: 300px;
-                height: 300px;
-                background: red;
-                border-radius: 10px;
-              }
-              .mui_list__bd {
-                width: 300px;
-                font-size: 30px;
-                line-height: 40px;
-                margin-top: 20px;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
-                white-space: normal;
-                word-wrap: break-word;
-                word-break: normal;
-              }
-
-            }
-          }
-        }
-      }
-    }
-    
   }
   
 }
