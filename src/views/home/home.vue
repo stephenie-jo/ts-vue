@@ -1,14 +1,9 @@
 <template>
   <div class="home">
+    
+    <Search name="音乐馆"/>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <van-row gutter="24" class="header">
-        <van-col span="5">音乐馆</van-col>
-        <van-col span="16">
-          <div class="search"><van-icon name="search" />搜索</div>
-        </van-col>
-      </van-row>
-
-      <van-swipe :autoplay="5000" indicator-color="white" class="banner">
+      <van-swipe :autoplay="3000" indicator-color="white" class="banner">
         <van-swipe-item v-for="(item, i) in swiperList" :key="i" class="banner-item">
           <img v-lazy="item">
         </van-swipe-item>
@@ -45,10 +40,12 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
 import Mod from '@/compoents/mod/index.vue'
 import Mod1 from '@/compoents/mod1/index.vue'
+import Search from '@/compoents/search/index.vue'
 @Component({
   components: {
     Mod,
-    Mod1
+    Mod1,
+    Search
   }
 })
 export default class Home extends Vue{
@@ -74,30 +71,16 @@ export default class Home extends Vue{
   onRefresh() {
     setTimeout(() => {
       this.isLoading = false
-    }, 500);
+    }, 500)
   }
 
   
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .home {
   padding-top: 20px;
-  .header {
-    line-height: 80px;
-    text-align: center;
-    .search {
-      height: 80px;
-      color: #9b9b9b;
-      border-radius: 100px;
-      background: #fff;
-      .van-icon {
-        top: 6px;
-        right: 10px;
-      }
-    }
-  }
   .banner {
     margin: 40px;
     height: 400px;
