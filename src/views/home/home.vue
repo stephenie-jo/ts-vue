@@ -10,11 +10,10 @@
       </van-swipe>
 
       <div class="navbar">
-        <div class="navbar-item">1</div>
-        <div class="navbar-item">1</div>
-        <div class="navbar-item">1</div>
-        <div class="navbar-item">1</div>
-        <div class="navbar-item">1</div>
+        <div class="navbar-item" v-for="(item, i) in  btns" :key="i">
+          <i class="iconfont" :class="item.icon"></i> <br/>
+          {{item.label}}
+        </div>
       </div>
 
       <div class="recommend">
@@ -22,10 +21,11 @@
         <div class="item" style="float: right"></div>
       </div>
 
-      <Mod />
-      <Mod />
+      <Mod class="mt-60"/>
+      
+      <Mod class="mt-60"/>
 
-      <Mod1 />
+      <Mod1 class="mt-60"/>
 
       <div>
 
@@ -53,22 +53,30 @@ export default class Home extends Vue{
   searchValue: any = ''
   isLoading: boolean = false
   swiperList: string[] = []
-
+  btns: object[] = [
+    {label: '歌手', icon: 'icon-geshou2'},
+    {label: '排行', icon: 'icon-paihang1'},
+    {label: '分类歌单', icon: 'icon-icon_type'},
+    {label: '电台', icon: 'icon-ziyuan'},
+    {label: '一起听', icon: 'icon-tingli'},
+  ]
 
 
   created() {
     this.init()
   }
 
-  init() {
+
+  // methods
+  init(): void {
     this.swiperList = [
       'https://y.gtimg.cn/music/common/upload/category_area/1909028.jpg',
       'https://y.gtimg.cn/music/common/upload/category_area/1579265.png',
     ]
   }
 
-  // methods
-  onRefresh() {
+  
+  onRefresh(): void {
     setTimeout(() => {
       this.isLoading = false
     }, 500)
@@ -81,6 +89,7 @@ export default class Home extends Vue{
 <style lang="less" scoped>
 .home {
   padding-top: 20px;
+  margin-bottom: 40px;
   .banner {
     margin: 40px;
     height: 400px;
@@ -96,11 +105,16 @@ export default class Home extends Vue{
     text-align: center;
     padding: 0 40px;
     height: 100px;
-    line-height: 100px;
     .navbar-item {
       width: 20%;
       float: left;
-      background: red;
+      line-height: 50px;
+      color: rgba(34,213,156,1);
+      i {
+        font-size: 40px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+      }
     }
   }
   .recommend {
@@ -114,6 +128,10 @@ export default class Home extends Vue{
       border-radius: 20px;
       background: red;
     }
+  }
+
+  .mt-60 {
+    margin-top: 60px;
   }
   
 }

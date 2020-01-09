@@ -23,6 +23,11 @@
       <van-col span="6" class="item">3</van-col>
       <van-col span="6" class="item">4</van-col>
     </van-row>
+
+    <div class="sortType">
+      <div class="title">智能分类</div>
+      <div class=""></div>
+    </div>
   </div>
 </template>
 
@@ -90,6 +95,16 @@ export default class UserConter extends Vue{
         width: 100px;
         height: 150px;
         background: red;
+      }
+    }
+    .sortType {
+      margin: 40px;
+      padding: 20px 40px;
+      border-radius: 10px;
+      background: #fff; 
+      .title {
+        font-weight: 600;
+
       }
     }
   }

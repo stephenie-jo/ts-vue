@@ -5,7 +5,8 @@
     </div>
    
     <van-row gutter="24" class="tabbar">
-      <van-col span="6" @click="goUrl(i)" v-for="(item, i) in btns" :key="i">
+      <van-col span="6" @click="goUrl(i)" v-for="(item, i) in btns" :key="i" class="item" :style="{color: active === i ? 'rgba(34,213,156,1)' : '#000'}">
+        <i class="iconfont" :class="item.icon"></i> <br/>
         {{item.label}}
       </van-col>
     </van-row>
@@ -20,18 +21,20 @@ export default class Common extends Vue{
   // data
   active: number = 0
   btns: object[] = [
-    {label: '音乐馆'},
-    {label: '音乐馆'},
-    {label: '音乐馆'},
-    {label: '我的'},
+    {label: '音乐馆', icon: 'icon-yinyue'},
+    {label: '推荐', icon: 'icon-tuijian1'},
+    {label: '动态', icon: 'icon-dongtai-copy'},
+    {label: '我的', icon: 'icon-wode'},
   ]
 
-  created() {
-    console.log(this.btns)
-  }
+
+  // created() {
+  //   console.log(this.btns)
+  // }
 
 
-  goUrl(i: number) {
+  // methods
+  goUrl(i: number): void {
     if (this.active === i) return
     this.active = i
 
@@ -58,9 +61,18 @@ export default class Common extends Vue{
     overflow-y: scroll;
     background: #f7f8fa;
   }
-  .tabber {
-    height: 100px;
+  .tabbar {
     text-align: center;
+    .item {
+      height: 100px;
+      text-align: center;
+      font-size: 18px;
+      padding-top: 20px;
+      i {
+        font-size: 40px;
+        margin-left: 8px;
+      }
+    }
   }
 }
 </style>

@@ -1,0 +1,170 @@
+{
+  "id": "1604909",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "27711",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "41330",
+      "name": "听",
+      "font_class": "ting",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "1180281",
+      "name": "动态",
+      "font_class": "dongtai",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "4133161",
+      "name": "歌手",
+      "font_class": "geshou",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "4275557",
+      "name": "歌手",
+      "font_class": "geshou1",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "5125952",
+      "name": "推荐",
+      "font_class": "tuijian1",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "5225097",
+      "name": "听力",
+      "font_class": "tingli",
+      "unicode": "eacf",
+      "unicode_decimal": 60111
+    },
+    {
+      "icon_id": "5240420",
+      "name": "动态",
+      "font_class": "dongtai1",
+      "unicode": "e68d",
+      "unicode_decimal": 59021
+    },
+    {
+      "icon_id": "5250927",
+      "name": "动态",
+      "font_class": "dongtai2",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "5785526",
+      "name": "音乐",
+      "font_class": "yinle1",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "6207101",
+      "name": "音乐",
+      "font_class": "yinyue",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "6338437",
+      "name": "电台",
+      "font_class": "ziyuan",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "6982923",
+      "name": "我 的",
+      "font_class": "wodeA",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "7149464",
+      "name": "排行",
+      "font_class": "paihang",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "7794222",
+      "name": "分类-未选中",
+      "font_class": "leimupinleifenleileibie1",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "8995957",
+      "name": "动态",
+      "font_class": "dongtai-copy",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "9716605",
+      "name": "分类-未选中",
+      "font_class": "leimupinleifenleileibie",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "9995952",
+      "name": "听..",
+      "font_class": "ting1",
+      "unicode": "e8ee",
+      "unicode_decimal": 59630
+    },
+    {
+      "icon_id": "10062801",
+      "name": "歌手",
+      "font_class": "geshou2",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "10113287",
+      "name": "分类-选中",
+      "font_class": "icon_type",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "10120273",
+      "name": "我 的",
+      "font_class": "wode",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "10439885",
+      "name": "排行",
+      "font_class": "paihang1",
+      "unicode": "e72b",
+      "unicode_decimal": 59179
+    },
+    {
+      "icon_id": "11911643",
+      "name": "歌手",
+      "font_class": "geshou3",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}
