@@ -28,12 +28,25 @@ export default class Common extends Vue{
   ]
 
 
-  // created() {
-  //   console.log(this.btns)
-  // }
+  created() {
+    this.init()
+  }
 
 
   // methods
+  init(): void {
+    const { name } = this.$route
+    let menus: string[] = ['home', '', '', 'mine']
+
+    menus.forEach((item, i) => {
+      if (item && item === name) {
+        this.active = i
+      }
+    })
+
+  }
+
+
   goUrl(i: number): void {
     if (this.active === i) return
     this.active = i
@@ -50,7 +63,9 @@ export default class Common extends Vue{
         })
         break
     }
-  }  
+  }
+  
+  
 }
 </script>
 

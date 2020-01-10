@@ -17,8 +17,13 @@
       </div>
 
       <div class="recommend">
-        <div class="item"></div>
-        <div class="item" style="float: right"></div>
+        <div class="item" v-for="(item, i) in recommend" :key="i">
+          <img src="../../assets/image/1.jpg" alt="">
+          <div class="con">
+            <div class="title">{{item.title}}</div>
+            <div>{{item.content}}</div>
+          </div>
+        </div>
       </div>
 
       <Mod class="mt-60"/>
@@ -59,6 +64,10 @@ export default class Home extends Vue{
     {label: '分类歌单', icon: 'icon-icon_type'},
     {label: '电台', icon: 'icon-ziyuan'},
     {label: '一起听', icon: 'icon-tingli'},
+  ]
+  recommend: object[] = [
+    {url: '', title: '新年新碟', content: 'ONER新年单曲', backgroundUrl: ''},
+    {url: '', title: '新年新碟', content: 'ONER新年单曲', backgroundUrl: ''},
   ]
 
 
@@ -118,15 +127,38 @@ export default class Home extends Vue{
     }
   }
   .recommend {
-    height: 250px;
+    // height: 250px;
     padding: 0 40px;
     margin: 40px 0;
+    overflow: hidden;
     .item {
       width: 49%;
-      height: 250px;
       float: left;
-      border-radius: 20px;
-      background: red;
+      border-radius: 12px;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      background: #f67b0e;
+      &:last-child {
+        float: right;
+      }
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 5px;
+        vertical-align: middle;
+      }
+      .con {
+        color: #fff;
+        font-size: 20px;
+        text-indent: 20px;
+        line-height: 40px;
+        display: inline-block;
+        vertical-align: middle;
+        .title {
+          font-size: 22px;
+          font-weight: 600;
+        }
+      }
     }
   }
 
