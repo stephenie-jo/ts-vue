@@ -30,32 +30,11 @@
       <div class=""></div>
     </div>
 
-    <div class="songSheet">
-      <van-tabs 
-        :v-model="0" 
-        background="#f7f8fa" 
-        title-active-color="#000"
-        title-inactive-color="#7b7878"
-        line-width="30px">
-        <van-tab title="自建歌单 3">内容 1</van-tab>
-        <van-tab title="收藏歌单 8">内容 2</van-tab>
-      </van-tabs>
-
+    <div class="tabs">
+      <Tabs :tabList="tabList" @setActive="getActive"/>
+      <div class="van_tab__pane">内容1</div>
     </div>
-
-    <div class="tabs_panel">
-      <div class="tabs_wrap">
-        <div class="tablist">
-          <div class="tab">123</div>
-          <div class="tab">123</div>
-          <div class="tab">123</div>
-          <div class="tab">123</div>
-          <div class="tab">123</div>
-          <div class="tab_line"></div>
-        </div>
-      </div>
-      <div>内容1</div>
-    </div>
+    
     
   </div>
 </template>
@@ -63,21 +42,27 @@
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
 import Search from '@/compoents/search/index.vue'
+import Tabs from '@/compoents/tabs/index.vue'
 @Component({
   components: {
-    Search
+    Search,
+    Tabs
   }
 })
 export default class UserConter extends Vue{
   // data
   num: number = 0
+  active: number = 0
   navbars: object[] = [
     {iconfont: 'icon-xihuan2', title: '喜欢', total: 179},
     {iconfont: 'icon-zuijin1', title: '最近', total: 179},
     {iconfont: 'icon-xiazai', title: '本地', total: 179},
     {iconfont: 'icon-yigoumai', title: '已购', total: 179},
   ]
-
+  tabList: object[] = [
+    {title: '自建歌单 3'},
+    {title: '收藏歌单 4'}
+  ]
 
 
   created() {
@@ -85,7 +70,9 @@ export default class UserConter extends Vue{
   }
 
   // methods
-  
+  getActive(i: number = 0): void {
+    this.active = i
+  }
 
   
 }
@@ -153,37 +140,11 @@ export default class UserConter extends Vue{
 
       }
     }
-    .songSheet {
-      padding: 0 40px;
-      .van-tab {
-        font-size: 30px;
-        margin-right: 20px; 
-        flex: none;
-        -webkit-flex: none;
-      }
-      .van-tabs__line {
-        background-color: #cdcaca;
-      }
-    }
-    .tabs_panel {
-      overflow: hidden;
-      .tabs_wrap {
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 0.373333rem 0;
-        margin-bottom: -0.373333rem;
-        .tablist {        
-          white-space: nowrap;
-          .tab {
-            width: 200px;
-            display: inline-block;
-          }
-          .tab_line {
+    .tabs {
+      margin: 0 40px;
+      // .van_tab__pane {
 
-          }
-        }
-      }
+      // }
     }
-    
   }
 </style>
