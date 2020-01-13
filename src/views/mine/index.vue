@@ -32,7 +32,14 @@
 
     <div class="tabs">
       <Tabs :tabList="tabList" @setActive="getActive"/>
-      <div class="van_tab__pane">内容1</div>
+      <div class="van_tab__pane" v-for="(item, i) in tabList" :key="i">
+        <div v-if="active === i">
+          <Sheet class="pane_item"/>
+          <Sheet class="pane_item"/>
+          <Sheet class="pane_item"/>
+          <Sheet class="pane_item"/>
+        </div>
+      </div>
     </div>
     
     
@@ -43,10 +50,12 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
 import Search from '@/compoents/search/index.vue'
 import Tabs from '@/compoents/tabs/index.vue'
+import Sheet from '@/compoents/sheet/index.vue'
 @Component({
   components: {
     Search,
-    Tabs
+    Tabs,
+    Sheet
   }
 })
 export default class UserConter extends Vue{
@@ -72,6 +81,7 @@ export default class UserConter extends Vue{
   // methods
   getActive(i: number = 0): void {
     this.active = i
+    
   }
 
   
@@ -142,9 +152,12 @@ export default class UserConter extends Vue{
     }
     .tabs {
       margin: 0 40px;
-      // .van_tab__pane {
-
-      // }
-    }
+      .van_tab__pane {
+        margin-bottom: 20px;
+        .pane_item {
+          margin-top: 20px;
+        }
+      }
+    }   
   }
 </style>

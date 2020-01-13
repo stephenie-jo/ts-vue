@@ -79,7 +79,12 @@ export default class Tabs extends Vue {
   active: number = 0
 
   init(): void {
+    const tablist: any = this.$refs.tablist
+    const tabline: any = this.$refs.tabline
 
+    
+    tablist.style.background = this.background
+    tabline.style['transition-duration'] = `${this.duration}s`
   }
 
   getActive(i: number): void {
