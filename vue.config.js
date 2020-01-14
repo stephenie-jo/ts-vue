@@ -9,7 +9,7 @@ module.exports = {
     open: true, 
     proxy: {
       '/cxb': {
-        target: 'http://iris.com:9090',
+        target: 'http://localhost:3030',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

@@ -31,7 +31,11 @@
     </div>
 
     <div class="tabs">
-      <Tabs :tabList="tabList" @setActive="getActive"/>
+      <Tabs 
+        :tabList="tabList" 
+        @setActive="getActive"
+        background="#f7f8fa"
+        lineColor="#b5b3b3"/>
       <div class="van_tab__pane" v-for="(item, i) in tabList" :key="i">
         <div v-if="active === i">
           <Sheet class="pane_item"/>

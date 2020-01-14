@@ -55,6 +55,13 @@ export default class Tabs extends Vue {
   })
   lineHeight!: string
 
+  @Prop({ // 底部条颜色	
+    type: String,
+    required: false,
+    default: 'red'
+  })
+  lineColor!: string
+
   @Prop({ // 标题选中态颜色	
     type: String,
     required: false,
@@ -72,6 +79,10 @@ export default class Tabs extends Vue {
   
 
   created () {
+    // this.init()
+  }
+
+  mounted () {
     this.init()
   }
 
@@ -85,6 +96,7 @@ export default class Tabs extends Vue {
     
     tablist.style.background = this.background
     tabline.style['transition-duration'] = `${this.duration}s`
+    tabline.style['background'] = this.lineColor
   }
 
   getActive(i: number): void {

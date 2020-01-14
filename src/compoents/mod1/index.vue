@@ -1,45 +1,22 @@
 <template>
   <div class="mod">
     <div class="mui_tit">
-      <div class="mui_tit__text">官方歌单</div>
+      <div class="mui_tit__text">{{sheet.title}}</div>
       <span class="more">更多<van-icon name="arrow" /></span>
     </div>
 
     <div class="mui_scroll">
       <div class="mui_scroll__bd">
         <div class="mui_list">
-          <div class="mui_list_item">
+          <div class="mui_list_item" v-for="(item, i) in sheet.list" :key="i">
             <div class="mui_list__box">
               <div class="mui_list__media">
-                <img src="../../assets/image/1909028.jpg" alt="">
+                <img :src="item.url" alt="">
               </div>
-              <div class="mui_list__bd">欧美| 流行节奏控</div>
+              <div class="mui_list__bd">{{item.text}}</div>
             </div>
           </div>
-          <div class="mui_list_item">
-            <div class="mui_list__box">
-              <div class="mui_list__media">
-                <img src="../../assets/image/1909028.jpg" alt="">
-              </div>
-              <div class="mui_list__bd">欧美| 流行节奏控</div>
-            </div>
-          </div>
-          <div class="mui_list_item">
-            <div class="mui_list__box">
-              <div class="mui_list__media">
-                <img src="../../assets/image/1909028.jpg" alt="">
-              </div>
-              <div class="mui_list__bd">欧美| 流行节奏控</div>
-            </div>
-          </div>
-          <div class="mui_list_item">
-            <div class="mui_list__box">
-              <div class="mui_list__media">
-                <img src="../../assets/image/1909028.jpg" alt="">
-              </div>
-              <div class="mui_list__bd">欧美| 流行节奏控</div>
-            </div>
-          </div>
+    
         </div>
       </div>
     </div>
@@ -50,7 +27,12 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
 @Component
 export default class Mod1 extends Vue{
-  
+  @Prop({
+    type: Object,
+    required: true,
+    default: () => {}
+  })
+  sheet!: {}
 }
 </script>
 

@@ -5,7 +5,7 @@
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <van-swipe :autoplay="3000" indicator-color="white" class="banner">
         <van-swipe-item v-for="(item, i) in swiperList" :key="i" class="banner-item">
-          <img v-lazy="item">
+          <img v-lazy="item.url">
         </van-swipe-item>
       </van-swipe>
 
@@ -26,11 +26,11 @@
         </div>
       </div>
 
-      <Mod class="mt-60"/>
+      <Mod class="mt-60" :sheet="officialSheet"/>
       
-      <Mod class="mt-60"/>
+      <Mod class="mt-60" :sheet="darenSheet"/>
 
-      <Mod1 class="mt-60"/>
+      <Mod1 class="mt-60" :sheet="sortArea"/>
 
       <div>
 
@@ -46,6 +46,7 @@ import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
 import Mod from '@/compoents/mod/index.vue'
 import Mod1 from '@/compoents/mod1/index.vue'
 import Search from '@/compoents/search/index.vue'
+import api from '@/common/api'
 @Component({
   components: {
     Mod,
@@ -57,7 +58,10 @@ export default class Home extends Vue{
   // data
   searchValue: any = ''
   isLoading: boolean = false
-  swiperList: string[] = []
+  swiperList: Object[] = []
+  officialSheet: object = {}
+  darenSheet: object = {}
+  sortArea: object = {}
   btns: object[] = [
     {label: '歌手', icon: 'icon-geshou2'},
     {label: '排行', icon: 'icon-paihang1'},
@@ -78,10 +82,15 @@ export default class Home extends Vue{
 
   // methods
   init(): void {
-    this.swiperList = [
-      'https://y.gtimg.cn/music/common/upload/category_area/1909028.jpg',
-      'https://y.gtimg.cn/music/common/upload/category_area/1579265.png',
-    ]
+
+    api.home.getHome({}, (res: any) => {
+      if (res.data.code === 'success') {
+        this.swiperList = res.data.obj.swiperList
+        this.officialSheet = res.data.obj.officialSheet
+        this.darenSheet = res.data.obj.darenSheet
+        this.sortArea = res.data.obj.sortArea
+      }
+    })
   }
 
   
