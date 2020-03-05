@@ -93,7 +93,9 @@ export default class Home extends Vue{
     })
   }
 
-  
+  /**
+   * 下拉
+   */
   onRefresh(): void {
     setTimeout(() => {
       this.isLoading = false

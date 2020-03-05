@@ -37,6 +37,12 @@ const routes = [
         component: () => import('../views/mine/index.vue')
       },
     ]
+  },
+  {
+    path: '/song',
+    name: 'song',
+    meta: {title: ''},
+    component: () => import('@/views/song/index.vue'),
   }
 ]
 
