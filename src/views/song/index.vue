@@ -1,5 +1,5 @@
 <template>
-  <div class="song">
+  <div class="song" ref="song">
     <div class="title"> 
       <span 
         @click="switchPage(0)"
@@ -16,7 +16,11 @@
         @touchend="moveEnd">
         <div class="left">
           <div class="img-box">
-            <img src="../../assets/image/2.jpg" alt="">
+            <img :src="imgUrl" alt="">
+          </div>
+
+          <div class="song-info">
+            <div class="song-name">给我一点温度</div>
           </div>
         </div>
 
@@ -31,12 +35,19 @@
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
+import api from '@/common/api'
+import {
+  getImageData, 
+  getCounts
+} from '@/common/helpers'
 
 @Component
 export default class Song extends Vue{
   // data
   start_X: number = 0
   currentIndex: number = 0
+  imgUrl: string = ''
+
 
   created() {
     this.init()
@@ -45,7 +56,40 @@ export default class Song extends Vue{
 
   // methods
   init(): void {
-    
+    this.getSongInfo()
+  }
+
+
+  /**
+   * 获取歌曲信息
+   */
+  getSongInfo() {
+    let that = this
+    api.song.getSong({code: 123}, (res: any) => {
+      if (res.data.code === 'success') {
+        const { url } = res.data.obj
+        this.imgUrl = require('../../assets/image/2.jpg')
+        this.getColor(this.imgUrl)
+      }
+    })
+  }
+
+  /**
+   * 获取图片主色
+   */
+  async getColor(url: string) {
+    try {
+      const data = await getImageData(url, 1)
+      let arr: any = getCounts(data, ['rgba(232,232,232, 0.5)', 'rgb(0, 0, 0)'])
+      let $el: any = this.$refs.song
+
+      let color: string = arr[0].color.split('(')[1].split(')')[0]
+      color = `rgba(${color}, 0.7)`
+      $el.style.background = color
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
 
 
@@ -76,7 +120,6 @@ export default class Song extends Vue{
    * 获取初始坐标
    */
   moveStart(e: any): void {
-    console.log('test:>start')
     this.start_X  = e.targetTouches[0].pageX
   }
 
@@ -118,7 +161,8 @@ export default class Song extends Vue{
     let el: any = this.$refs.swiper
     const move_X: number = e.changedTouches[0].pageX
     const move_W: number = move_X  - start_X
-    const client_W: number = e.changedTouches[0].target.clientWidth
+    const client_W: number = window.innerWidth
+    console.log('test:>end', client_W)
 
     if (move_W === 0) {
       return 
@@ -172,7 +216,6 @@ export default class Song extends Vue{
 <style lang="less">
 .song {
   height: 100vh;
-  background: #e91e1e6b;
   .title {
     width: 300px;
     height: 60px;
@@ -199,7 +242,7 @@ export default class Song extends Vue{
           width: 80vw;
           height: 80vw;
           vertical-align: middle;
-          margin: 0 auto;
+          margin: 20px auto;
           border-radius: 20px;
           overflow: hidden;
           img {
@@ -208,11 +251,20 @@ export default class Song extends Vue{
             border-radius: 10px;
           }
         }
+        .song-info {
+          width: 80vw;
+          margin: 0 auto;
+          .song-name {
+            color: #fff;
+            font-size: 50px;
+            font-weight: 600;
+            letter-spacing:8px;
+          }
+        }
       }
       .right {
         width: 100vw;
         height: 100%;
-        background: yellow;
         float: left;
       }
     }

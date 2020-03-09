@@ -9,5 +9,13 @@ export default {
           sc(r)
         })
     }
+  },
+  song: {
+    getSong: function(params: object, sc: any) {
+      axios.post(url.song.getSong, params)
+        .then((r) => {
+          sc(r)
+        })
+    }
   }
 }

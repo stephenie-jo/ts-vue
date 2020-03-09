@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/lshextension/',
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : '',
   outputDir: 'dist',
   lintOnSave: false,
   productionSourceMap: false,
