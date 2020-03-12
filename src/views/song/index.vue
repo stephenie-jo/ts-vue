@@ -21,6 +21,40 @@
 
           <div class="song-info">
             <div class="song-name">给我一点温度</div>
+            <div class="song-user">梁博</div>
+            <div class="song-lyric">给我一点温度</div>
+
+            <div class="progress">
+              <div class="progress-bg"></div>
+              <div class="progress-bar">
+                <div class="progress-spot"></div>
+              </div>
+            </div>
+
+            <div class="progress-time">
+              <div class="fl time">00:00</div>
+              <div class="fr time">{{ duration | formatTime}}</div>
+            </div>
+
+            <div class="play-box">
+              <i class="fl iconfont icon-shangyishou icon-pro"
+                @touchstart.stop
+                @touchmove.stop
+                @touchend.stop></i>
+              <i class="fr iconfont icon-xiayishou icon-next"
+                @touchstart.stop
+                @touchmove.stop
+                @touchend.stop></i>
+              <i class="icon-play iconfont" 
+                :class="[playFlag ? 'icon-zanting' : 'icon-bofang1']"  
+                @touchstart.stop="handleSwitch($event)"
+                @touchmove.stop
+                @touchend.stop
+                ></i>
+            </div>
+
+            <audio autoplay controls id="music" src="../../assets/mp3/123.mp3" ref="music"></audio>
+
           </div>
         </div>
 
@@ -41,22 +75,63 @@ import {
   getCounts
 } from '@/common/helpers'
 
-@Component
+@Component({
+  filters: {
+    formatTime: (val: number) => {
+      let time: any = val / 60 * 100
+      time =(parseInt(time.toString().split('.')[0])/100).toFixed(2)
+
+      let min: string = time.split('.')[0]
+      let sec: string = time.split('.')[1]
+      min = min.length < 2 ? '0' + min : min
+
+      return `${min}:${sec}`
+    }
+  }
+})
+
 export default class Song extends Vue{
   // data
   start_X: number = 0
   currentIndex: number = 0
   imgUrl: string = ''
+  playFlag: boolean = false
+  duration: number = 0
 
 
   created() {
     this.init()
   }
 
+  mounted() {
+    this.getMusicInfo()
+  }
+
 
   // methods
   init(): void {
     this.getSongInfo()
+  }
+
+
+  /**
+   * 获取audio时长
+   */
+  getMusicInfo(): void {
+    let el: any = this.$refs.music
+    el.ondurationchange = () => {
+      this.duration = el.duration
+      el.play()
+    }
+  }
+
+
+  /**
+   * 播放、暂停
+   */
+  handleSwitch(e: any): void {
+    this.playFlag = !this.playFlag
+    console.log('test:>播放', this.playFlag)
   }
 
 
@@ -120,6 +195,7 @@ export default class Song extends Vue{
    * 获取初始坐标
    */
   moveStart(e: any): void {
+    console.log('test:>start')
     this.start_X  = e.targetTouches[0].pageX
   }
 
@@ -128,6 +204,7 @@ export default class Song extends Vue{
    * 移动盒子
    */
   moveBox(e: any): void {
+    console.log('test:>move')
     const { start_X, currentIndex } = this
 
     let el: any = this.$refs.swiper
@@ -190,9 +267,14 @@ export default class Song extends Vue{
     } else {
 
       if (currentIndex === 0) {
-        el.style.transform = `translateX(${-client_W}px)`
-        el.style.transition = '500ms'
-        this.currentIndex = 1
+        if (-move_W >= client_W / 2) {
+          el.style.transform = `translateX(${-client_W}px)`
+          el.style.transition = '500ms'
+          this.currentIndex = 1
+        } else {
+          el.style.transform = `translateX(0px)`
+          el.style.transition = '500ms'
+        }
       } else {
         if (-move_W >= client_W / 2) {
           el.style.transform = `translateX(${-client_W}px)`
@@ -260,6 +342,69 @@ export default class Song extends Vue{
             font-weight: 600;
             letter-spacing:8px;
           }
+          .song-user, .song-lyric {
+            color: #ccc;
+            font-size: 35px;
+            line-height: 80px;
+          }
+          .progress {
+            width: 100%;
+            padding: 20px 0;            
+            position: relative;
+            overflow: hidden;
+            .progress-bg {
+              width: 100%;
+              height: 3px;
+              background: red;
+            }
+            .progress-bar {
+              width: 100%;
+              height: 4px;
+              background: #fff;
+              position: absolute;
+              top: 19px;
+              transform: translateX(-80vw);
+              .progress-spot {
+                width: 30px;
+                height: 30px;
+                background: #fff;
+                border-radius: 50%;
+                position: absolute;
+                top: -50%;
+                transform: translateY(-50%);
+                right: 0;
+              }
+            }
+            
+          }
+          .progress-time {
+            width: 100%;
+            overflow: hidden;
+            .time {
+              color: #ccc;
+              font-size: 20px;
+            }
+          }
+          .play-box {
+            width: 54vw;
+            margin: 0 auto;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+            .icon-play {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translateX(-50%) translateY(-50%);
+              color: #fff;
+              font-size: 120px;
+            }
+            .icon-pro, .icon-next {
+              color: #fff;
+              font-size: 60px;
+              font-weight: 600;
+            }
+          }
         }
       }
       .right {
@@ -268,6 +413,12 @@ export default class Song extends Vue{
         float: left;
       }
     }
+  }
+  .fl {
+    float: left;
+  }
+  .fr {
+    float: right;
   }
 }
 </style>
