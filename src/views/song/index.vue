@@ -24,16 +24,24 @@
             <div class="song-user">梁博</div>
             <div class="song-lyric">给我一点温度</div>
 
-            <div class="progress">
+            <div class="progress"
+                @touchstart.stop
+                @touchmove.stop
+                @touchend.stop
+                @click="changeTime($event)">
               <div class="progress-bg"></div>
-              <div class="progress-bar">
-                <div class="progress-spot"></div>
+              <div class="progress-bar" ref="bar">
+                <div class="progress-spot"
+                  @click.stop
+                  @touchstart.stop="getStartTime($event)"
+                  @touchmove.stop="getCurrentTime($event)"
+                  @touchend.stop="getEndTime($event)"></div>
               </div>
             </div>
 
             <div class="progress-time">
-              <div class="fl time">00:00</div>
-              <div class="fr time">{{ duration | formatTime}}</div>
+              <div class="fl time">{{ startTime | formatTime}}</div>
+              <div class="fr time">{{ endTime | formatTime}}</div>
             </div>
 
             <div class="play-box">
@@ -47,13 +55,14 @@
                 @touchend.stop></i>
               <i class="icon-play iconfont" 
                 :class="[playFlag ? 'icon-zanting' : 'icon-bofang1']"  
-                @touchstart.stop="handleSwitch($event)"
+                @click="handleSwitch($event)"
+                @touchstart.stop
                 @touchmove.stop
                 @touchend.stop
                 ></i>
             </div>
 
-            <audio autoplay controls id="music" src="../../assets/mp3/123.mp3" ref="music"></audio>
+            <audio autoplay id="music" :src="audioSrc" ref="music"></audio>
 
           </div>
         </div>
@@ -78,25 +87,29 @@ import {
 @Component({
   filters: {
     formatTime: (val: number) => {
-      let time: any = val / 60 * 100
-      time =(parseInt(time.toString().split('.')[0])/100).toFixed(2)
-
-      let min: string = time.split('.')[0]
-      let sec: string = time.split('.')[1]
-      min = min.length < 2 ? '0' + min : min
+      let min: number = Math.floor(val / 60)
+      let sec: any = Math.floor(val - min * 60)
+      sec = sec < 10 ? '0' + sec : sec
 
       return `${min}:${sec}`
     }
   }
 })
 
+
+
 export default class Song extends Vue{
   // data
   start_X: number = 0
+  current_X: number = 0
   currentIndex: number = 0
-  imgUrl: string = ''
-  playFlag: boolean = false
+  startTime: number = 0
+  endTime: number = 0
   duration: number = 0
+  imgUrl: string = ''
+  audioSrc: any = ''
+  playFlag: boolean = false
+  dropFlag: boolean = false
 
 
   created() {
@@ -104,8 +117,23 @@ export default class Song extends Vue{
   }
 
   mounted() {
-    this.getMusicInfo()
+    let el: any = this.$refs.music
+    el.onloadstart = () => {
+      this.getMusicInfo()
+    }
   }
+
+  // @Watch('audioSrc') 
+  // getAudioSrc(newVal: any, oldVal: any) {
+
+  //   let el: any = this.$refs.music
+  //   this.$nextTick(() => {
+  //     let el: any = this.$refs.music
+  //     el.play().catch((err: any) => {
+  //       console.log('test:>err', err)
+  //     })
+  //   })
+  // } 
 
 
   // methods
@@ -120,9 +148,10 @@ export default class Song extends Vue{
   getMusicInfo(): void {
     let el: any = this.$refs.music
     el.ondurationchange = () => {
+      this.endTime = el.duration
       this.duration = el.duration
-      el.play()
     }
+    this.getSongTime()
   }
 
 
@@ -130,15 +159,108 @@ export default class Song extends Vue{
    * 播放、暂停
    */
   handleSwitch(e: any): void {
+    let el: any = this.$refs.music
+
+    if (this.playFlag) {
+      el.pause()
+    } else {
+      this.$nextTick(() => {
+        el.play().catch((err: any) => {
+          console.log('test:>play_err', err)
+        })
+      })
+    }
     this.playFlag = !this.playFlag
-    console.log('test:>播放', this.playFlag)
+  }
+
+
+  /**
+   * 点击进度条
+   */
+  changeTime(e: any): void {
+    let el: any = this.$refs.music
+    let bar: any = this.$refs.bar
+    let current_X = e.offsetX
+    let _width = bar.clientWidth
+
+    current_X = -_width + current_X
+    bar.style.transform = `translateX(${current_X}px`
+
+    el.currentTime = this.duration * e.offsetX / _width
+  }
+
+
+  /**
+   * 点击获取圆点
+   */
+  getStartTime(e: any): void {
+    this.dropFlag = true
+    this.current_X = e.targetTouches[0].target.clientWidth
+  }
+
+
+  getCurrentTime(e: any): void {
+    if (this.dropFlag) {
+      let el: any = this.$refs.music
+      let bar: any = this.$refs.bar
+      el.pause()
+
+      let current_X = e.targetTouches[0].target.clientWidth
+      let move_X = current_X - this.currentIndex 
+      let _width = bar.clientWidth
+
+      let currentTime = el.currentTime
+      let X = _width * currentTime / this.duration
+
+      if (move_X > 0) {
+        current_X = -_width + X + move_X
+      } else {
+        current_X = -_width + X - move_X
+      }
+      bar.style.transform = `translateX(${current_X})`
+    }
+  }
+
+  
+  getEndTime(e: any): void {
+    this.dropFlag = false
+  }
+
+
+  /**
+   * 获取当前播放时间
+   */
+  getSongTime(): void {
+    let el: any = this.$refs.music
+    el.ontimeupdate = () => {
+      this.updateTime()
+    }
+  }
+
+
+  /**
+   * 更新播放时间
+   */
+  updateTime(): void {
+    let el: any = this.$refs.music
+    let bar: any = this.$refs.bar
+    let currentTime = el.currentTime
+    this.startTime = currentTime
+    this.endTime = this.duration - currentTime
+
+    let _width = bar.clientWidth
+    let current_X = 0
+
+    current_X = _width * currentTime / this.duration
+    current_X = -_width + current_X
+    bar.style.transform = `translateX(${current_X}px`
   }
 
 
   /**
    * 获取歌曲信息
    */
-  getSongInfo() {
+  getSongInfo(): void {
     let that = this
     api.song.getSong({code: 123}, (res: any) => {
       if (res.data.code === 'success') {
@@ -147,6 +269,7 @@ export default class Song extends Vue{
         this.getColor(this.imgUrl)
       }
     })
+    this.audioSrc = require('../../assets/mp3/123.mp3')
   }
 
   /**
@@ -195,8 +318,7 @@ export default class Song extends Vue{
    * 获取初始坐标
    */
   moveStart(e: any): void {
-    console.log('test:>start')
-    this.start_X  = e.targetTouches[0].pageX
+    this.start_X  = e.targetTouches[0].clientX
   }
 
 
@@ -204,11 +326,10 @@ export default class Song extends Vue{
    * 移动盒子
    */
   moveBox(e: any): void {
-    console.log('test:>move')
     const { start_X, currentIndex } = this
 
     let el: any = this.$refs.swiper
-    const move_X: number = e.targetTouches[0].pageX
+    const move_X: number = e.targetTouches[0].clientX
     const move_W: number = move_X  - start_X
     const client_W: number = e.targetTouches[0].target.clientWidth
     
@@ -236,10 +357,9 @@ export default class Song extends Vue{
   moveEnd(e: any): void {
     let { start_X, currentIndex } = this
     let el: any = this.$refs.swiper
-    const move_X: number = e.changedTouches[0].pageX
+    const move_X: number = e.changedTouches[0].clientX
     const move_W: number = move_X  - start_X
     const client_W: number = window.innerWidth
-    console.log('test:>end', client_W)
 
     if (move_W === 0) {
       return 
@@ -349,7 +469,8 @@ export default class Song extends Vue{
           }
           .progress {
             width: 100%;
-            padding: 20px 0;            
+            padding: 20px 0;    
+            margin-top: 80px;        
             position: relative;
             overflow: hidden;
             .progress-bg {
@@ -363,10 +484,10 @@ export default class Song extends Vue{
               background: #fff;
               position: absolute;
               top: 19px;
-              transform: translateX(-80vw);
+              transform: translateX(-78vw);
               .progress-spot {
-                width: 30px;
-                height: 30px;
+                width: 20px;
+                height: 20px;
                 background: #fff;
                 border-radius: 50%;
                 position: absolute;
@@ -388,6 +509,7 @@ export default class Song extends Vue{
           .play-box {
             width: 54vw;
             margin: 0 auto;
+            margin-top: 20px;
             padding: 40px 0;
             position: relative;
             overflow: hidden;
